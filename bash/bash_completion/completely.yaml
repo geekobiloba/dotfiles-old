@@ -1,0 +1,17 @@
+completely:
+- init
+- preview
+- generate
+- test
+
+completely init:
+- --help
+
+completely preview:
+- --help
+
+completely generate:
+- --help
+
+completely test:
+- --help

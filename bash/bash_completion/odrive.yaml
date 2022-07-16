@@ -1,0 +1,128 @@
+odrive:
+- authenticate
+- mount
+- unmount
+- backup
+- removebackup
+- sync
+- stream
+- refresh
+- unsync
+- xlthreshold
+- autounsyncthreshold
+- autotrashthreshold
+- placeholderthreshold
+- foldersyncrule
+- encpassphrase
+- syncstate
+- status
+- deauthorize
+- diagnostics
+- backupnow
+- emptytrash
+- restoretrash
+- shutdown
+
+odrive authenticate:
+- --help
+
+odrive mount:
+- --help
+
+odrive unmount:
+- --help
+
+odrive backup:
+- --help
+
+odrive removebackup:
+- --help
+
+odrive sync:
+- --help
+- --recursive
+- --nodownload
+
+odrive stream:
+- --help
+- --remote
+
+odrive refresh:
+- --help
+
+odrive unsync:
+- --help
+- --force
+
+odrive xlthreshold:
+- --help
+- never
+- small
+- medium
+- large
+- xlarge
+
+odrive autounsyncthreshold:
+- --help
+- never
+- day
+- week
+- month
+
+odrive autotrashthreshold:
+- --help
+- never
+- immediately
+- fifteen
+- hour
+- day
+
+odrive placeholderthreshold:
+- --help
+- never
+- small
+- medium
+- large
+- always
+
+odrive foldersyncrule:
+- --help
+- --expandsubfolders
+
+odrive encpassphrase:
+- --help
+- --initialize
+
+odrive syncstate:
+- --help
+- --textonly
+
+odrive status:
+- --help
+- --mounts
+- --backups
+- --sync_requests
+- --uploads
+- --downloads
+- --background
+- --trash
+- --waiting
+- --not_allowed
+
+odrive deauthorize:
+- --help
+
+odrive diagnostics:
+- --help
+
+odrive backupnow:
+- --help
+
+odrive emptytrash:
+- --help
+
+odrive restoretrash:
+- --help
+
+odrive shutdown:
+- --help
