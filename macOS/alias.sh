@@ -26,3 +26,5 @@ alias      cath="highlight"
 alias neofetch='naughtyfetch ~/Private/asciiart/img/karen-kaede-9.jpg 78 "0OQ"'
 #alias neofetch='naughtyfetch ~/Private/asciiart/img/karen-kaede-31sq.png 56 "QO0MWAV"'
 
+alias gpl='gh profile list'
+
