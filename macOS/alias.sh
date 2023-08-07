@@ -18,8 +18,6 @@ alias      ffp="firefoxp"
 alias      w3m="w3m -sixel -H -F"
 #alias      w3m='w3m -T text/html'
 
-alias gpl='gh profile list'
-
 # subjects to change
 alias highlight="highlight -s candy"
 alias      cath="highlight"
