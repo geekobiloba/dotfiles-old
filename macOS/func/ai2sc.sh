@@ -53,7 +53,8 @@ ai2sc()(
       error_99
     fi
 
-    iferror "ERROR: ansible-inventory exit code: $?"
+    
+    ferror "ERROR: ansible-inventory exit code: $?"
 
     if [ -n "$JSON" ] ; then
       SSHCONF_BODY+="$(
@@ -160,8 +161,6 @@ Host \(
     fi
 
     iferror "ERROR: jq exit code: $?"
-
-    echo "$SSHCONF_HEAD"
 
     {
       echo "$SSHCONF_HEAD"

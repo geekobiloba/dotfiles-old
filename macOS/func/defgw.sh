@@ -20,7 +20,7 @@ defgw(){
 
   netstat -nr $( echo "$ARGV" ) \
   | awk '
-      /^(default|Destination)/ {
+      /^(default|0\/1|Destination)/ {
         if ( $1 == "Destination" && header != 0 ) {
           next
         } else {
