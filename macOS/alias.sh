@@ -12,10 +12,9 @@ alias    iperf="iperf3"
 #alias    iperf="iperf3-darwin"
 
 # browsers
-#alias  firefox="/Applications/Firefox.app/Contents/MacOS/firefox-bin"
-alias      ffp="firefox -p 2>/dev/null"
-alias      w3m="w3m -sixel -H -F"
-#alias      w3m='w3m -T text/html'
+alias ffp="firefox -p 2>/dev/null"
+alias w3m="w3m -sixel -H -F"
+#alias w3m='w3m -T text/html'
 
 # subjects to change
 alias highlight="highlight -s candy"

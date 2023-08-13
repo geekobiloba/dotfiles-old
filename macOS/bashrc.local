@@ -33,7 +33,8 @@ alias    l='exa -lgh'
 alias   lx='exa'
 alias  lxa='l -a'
 alias  lxt='l -T'
-alias lxta='lt -a'
+alias lxta='lxt -a'
+alias lxat='lxta'
 
 # ripgrep
 alias   rgh='rg --hidden'
