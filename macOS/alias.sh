@@ -12,17 +12,18 @@ alias    iperf="iperf3"
 #alias    iperf="iperf3-darwin"
 
 # browsers
-alias ffp="firefox -p 2>/dev/null"
-alias w3m="w3m -sixel -H -F"
-#alias w4m='w3m -T text/html'
+#alias  firefox="/Applications/Firefox.app/Contents/MacOS/firefox-bin"
+alias      ffp="firefox -p 2>/dev/null"
+alias      w3m="w3m -sixel -H -F"
+#alias      w3m='w3m -T text/html'
 
 # subjects to change
 alias highlight="highlight -s candy"
 alias      cath="highlight"
 #alias linguist="github-linguist"
 
-alias neofetch='naughtyfetch ~/Private/asciiart/img/karen-kaede-9.jpg 78 "0OQ"'
-#alias neofetch='naughtyfetch ~/Private/asciiart/img/karen-kaede-31sq.png 56 "QO0MWAV"'
+#alias neofetch='naughtyfetch ~/Private/asciiart/img/karen-kaede-9.jpg 78 "0OQ"'
+alias neofetch='naughtyfetch ~/Private/asciiart/img/karen-kaede-31sq.png 56 "QO0MWAV"'
 
 alias gpl='gh profile list'
 
