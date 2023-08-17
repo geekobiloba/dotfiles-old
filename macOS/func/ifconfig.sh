@@ -1,17 +1,18 @@
-# vim: set filetype=bash
+# macOS - Better ifconfig
 
 ifconfig()(
+  # CIDR netmask
   ifconfigc(){
     local IFCONFIG="$( command ifconfig $@ )"
-    local NETMASKS="$( netmasks )"
+    local NETMASK
 
-    while read n ; do
-      IFCONFIG="$(
-        local o="$(
+    get_netmasks \
+    | while read xNETMASK ; do
+        NETMASK="$(
           {
             echo 'obase=2'
             echo 'ibase=16'
-            echo $n \
+            echo $xNETMASK \
             | tr '[a-z]' '[A-Z]'
           } \
           | bc \
@@ -20,66 +21,99 @@ ifconfig()(
           | tr -d ' '
         )"
 
-        echo "$IFCONFIG" \
-        | gsed 's, netmask 0x'$n',/'$o',' 
-      )"
-    done <<EOF
-$( echo "$NETMASKS" )
-EOF
+        IFCONFIG="$(
+          echo "$IFCONFIG" \
+          | sed 's, netmask 0x'$xNETMASK',/'$NETMASK','
+        )"
+      done
 
-    echo "$IFCONFIG"
+    echo "$IFCONFIG" \
+    | sed 's,^[^[:space:]],\n&,' 
   }
 
+  # Decimal netmask
   ifconfigd(){
     local IFCONFIG="$( command ifconfig $@ )"
-    local NETMASKS="$( netmasks )"
+    local NETMASK
 
-    while read n ; do
-      IFCONFIG="$(
-        local o="$(
+    get_netmasks \
+    | while read xNETMASK ; do
+        NETMASK="$(
           {
-            echo 'obase=10' # obase must be defined before ibase to prevent weird results.
+            # obase must be defined before ibase
+            # to prevent weird results.
+            echo 'obase=10'
             echo 'ibase=16'
-            echo $n \
-            | tr '[a-z]' '[A-Z]' \
-            | gsed -r 's,[0-9A-F]{2},&\;,g'
+            echo $xNETMASK \
+            | sed -r 's,[[:xdigit:]]{2},&\;,g' \
+            | tr '[a-z]' '[A-Z]'
           } \
           | bc \
           | tr '\n' '.' \
-          | gsed 's,\.$,,'
+          | sed 's,\.$,,'
         )"
 
-        echo "$IFCONFIG" \
-        | gsed -r 's,( netmask )0x'$n',\1'$o',' 
-      )"
-    done <<EOF
-$( echo "$NETMASKS" )
-EOF
+        IFCONFIG="$(
+          echo "$IFCONFIG" \
+          | sed -r 's,( netmask )0x'$xNETMASK',\1'$NETMASK','
+        )"
+      done
 
-    echo "$IFCONFIG"
+    echo "$IFCONFIG" \
+    | sed 's,^[^[:space:]],\n&,' 
   }
 
-  netmasks(){
+  ifconfigx(){
+    command ifconfig "$@" \
+    | sed 's,^[^[:space:]],\n&,' 
+  }
+
+  get_netmasks(){
     echo "$IFCONFIG" \
-    | gsed -nr \
-        's,.*netmask 0x([0-9a-f]{8}).*,\1,p'
+    | sed -nr \
+        's,.*netmask 0x([[:xdigit:]]{8}).*,\1,p'
+  }
+
+  colorize(){
+    printf '%b\n' "$(
+      echo "$( $@ )" \
+      | sed -r \
+          `# interface name or bridge member interface` \
+          -e 's,^([[:space:]]+member: )?([^[:space:]:]+)(:?),\1\\e[1m\2\\e[m\3,' \
+          `# MAC address` \
+          -e 's,(ether )([[:xdigit:]:]+),\1\\e[1;2;33m\2\\e[m,' \
+          `# status active` \
+          -e 's,(status: )(active),\1\\e[1;32m\2\\e[m,' \
+          `# status inactive` \
+          -e 's,(status: )(inactive),\1\\e[1;31m\2\\e[m,' \
+          `# netmask; must be processed before IPv4` \
+          -e 's,((netmask|prefixlen|inet [[:digit:]\.]+)[ \/])([[:xdigit:]x\.]+),\1\\e[1;35m\3\\e[m,' \
+          `# IPv4` \
+          -e 's,(inet )([[:digit:]\.]+),\1\\e[1;36m\2\\e[m,' \
+          `# IPv6` \
+          -e 's,(inet6 )([[:xdigit:]:]+),\1\\e[1;34m\2\\e[m,' \
+    )"
   }
 
   case "$1" in
     -c|--cidr)
       shift
-      ifconfigc $@
+      colorize ifconfigc "$@"
     ;;
+
     -d|--decimal)
       shift
-      ifconfigd $@
+      colorize ifconfigd "$@"
     ;;
-    -x|--hexadecimal|-r|--real)
+
+    -x|--hexadecimal)
       shift
-      command ifconfig $@
+      colorize ifconfigx "$@"
     ;;
+
     *)
-      ifconfigc $@
+      colorize ifconfigc "$@"
     ;;
   esac
 )
+

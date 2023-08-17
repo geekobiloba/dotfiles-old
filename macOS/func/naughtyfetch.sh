@@ -1,4 +1,5 @@
 # naughty neofetch
+# Safe to alias naughtyfetch=neofetch
 
 naughtyfetch(){
   local IMAGE="$1"
