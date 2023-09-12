@@ -1,0 +1,11 @@
+custom.sh
+zshrc_priv
+zshrc_work
+bashrc_priv
+bashrc_work
+.zshrc_priv
+.zshrc_work
+.bashrc_priv
+.bashrc_work
+.DS_Store
+

@@ -1,0 +1,4 @@
+preview(){
+  open -a Preview $@
+}
+

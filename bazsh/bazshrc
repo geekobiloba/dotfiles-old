@@ -1,0 +1,62 @@
+# vim: filetype=bash
+
+case $OS_FAMILY in
+  macOS)
+    # brew completions, must be loaded before oh-my-zsh
+    FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:$FPATH"
+
+    if [ $EUID -eq 0 ] ; then
+      # Allow root to use Homebrew-installed apps.
+      # Export PATH before any aliases.
+      export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+
+      # Bold red prompt
+      PS1='%B%F{red}[%n@%m:%~]%#%f%b '
+    fi
+  ;;
+
+  FreeBSD)
+  ;;
+
+  Linux)
+  ;;
+
+  SunOS)
+  ;;
+esac
+
+# EDITOR, nvim / vim / vi
+if which nvim &>/dev/null ; then
+  export EDITOR="nvim"
+
+  alias      vi="nvim"
+  alias     vim="nvim"
+  alias    view="nvim -R"
+  alias vimdiff="nvim -d"
+
+elif which vim &>/dev/null ; then
+  export EDITOR="vim"
+
+  alias vi="vim"
+
+else
+  export EDITOR="vi"
+fi
+
+export      LESS="-Ri"
+export BAT_THEME="Dracula"
+
+test -f $ETC_PATH/bazsh.d/alias/alias.sh              && . $_
+test -f $ETC_PATH/bazsh.d/alias/alias_${OS_FAMILY}.sh && . $_
+
+   test -d  $ETC_PATH/bazsh.d/func \
+&& for f in $ETC_PATH/bazsh.d/func/*.sh ; do . $f ; done
+
+   test -d  $ETC_PATH/bazsh.d/func/${OS_FAMILY} \
+&& for f in $ETC_PATH/bazsh.d/func/${OS_FAMILY}/*.sh ; do . $f ; done
+
+   test -d  $ETC_PATH/bazsh.d/func/${SHELL_NAME} \
+&& for f in $ETC_PATH/bazsh.d/func/${SHELL_NAME}/*.sh ; do . $f ; done
+
+test -f $ETC_PATH/bazsh/custom.sh && . $_
+

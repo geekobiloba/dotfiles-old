@@ -1,0 +1,54 @@
+# vim: filetype=bash
+
+export  OS_FAMILY=$(uname -s)
+export SHELL_NAME=$(echo $SHELL | awk -F/ '{print $NF}')
+
+case $OS_FAMILY in
+  Darwin)
+    export OS_FAMILY=$(sw_vers --productName) # macOS
+    export  ETC_PATH=/etc
+
+    . $ETC_PATH/bazshrc
+
+    test -d /opt/homebrew/opt/ruby/bin && PATH=$_:$PATH ; export PATH
+
+       test -d ~/Library/Python \
+    && test -d $_/$(ls $_ | sort -nr | head -n1)/bin \
+    && PATH=$_:$PATH ; export PATH
+
+    # Podman and Docker interop
+    test -f ~/.local/share/containers/podman/machine/qemu/podman.sock \
+    && export DOCKER_HOST="unix://$_"
+
+    # Ctrl+U behavior as in bash
+    bindkey \^U backward-kill-line
+  ;;
+
+  FreeBSD)
+    export ETC_PATH=/usr/local/etc
+  ;;
+
+  Linux)
+    export ETC_PATH=/etc
+  ;;
+
+  SunOS)
+    export ETC_PATH=/etc
+  ;;
+esac
+
+test -d ~/.cargo/bin && PATH=$_:$PATH ; export PATH
+test -d ~/go/bin     && PATH=$_:$PATH ; export PATH
+test -d ~/bin        && PATH=$_:$PATH ; export PATH
+
+test -f ~/.bazsh.d/alias/alias.sh              && . $_
+test -f ~/.bazsh.d/alias/alias_${OS_FAMILY}.sh && . $_
+
+test -d ~/.bazsh.d/func             && ls $_/*.sh | while read f ; do . $f ; done
+test -d ~/.bazsh.d/func/$OS_FAMILY  && ls $_/*.sh | while read f ; do . $f ; done
+test -d ~/.bazsh.d/func/$SHELL_NAME && ls $_/*.sh | while read f ; do . $f ; done
+
+test -f ~/.bazsh.d/custom.sh    && . $_
+test -f ~/.${SHELL_NAME}rc_priv && . $_
+test -f ~/.${SHELL_NAME}rc_work && . $_
+
