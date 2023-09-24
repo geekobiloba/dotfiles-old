@@ -8,8 +8,6 @@ case $OS_FAMILY in
     export OS_FAMILY=$(sw_vers --productName) # macOS
     export  ETC_PATH=/etc
 
-    . $ETC_PATH/bazshrc
-
     test -d /opt/homebrew/opt/ruby/bin && PATH=$_:$PATH ; export PATH
 
        test -d ~/Library/Python \
@@ -36,6 +34,8 @@ case $OS_FAMILY in
     export ETC_PATH=/etc
   ;;
 esac
+
+. $ETC_PATH/bazshrc
 
 test -d ~/.cargo/bin && PATH=$_:$PATH ; export PATH
 test -d ~/go/bin     && PATH=$_:$PATH ; export PATH

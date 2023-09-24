@@ -2,10 +2,12 @@
 
 case $OS_FAMILY in
   macOS)
+
     # brew completions, must be loaded before oh-my-zsh
     FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:$FPATH"
 
     if [ $EUID -eq 0 ] ; then
+
       # Allow root to use Homebrew-installed apps.
       # Export PATH before any aliases.
       export PATH="$HOMEBREW_PREFIX/bin:$PATH"
@@ -19,6 +21,11 @@ case $OS_FAMILY in
   ;;
 
   Linux)
+    if [ $EUID -eq 0 ] ; then
+
+      # Bold red prompt
+      PS1='\e[1;31m[\u@\H:\w]\$\e[m '
+    fi
   ;;
 
   SunOS)

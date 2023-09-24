@@ -1,8 +1,6 @@
 alias    grep="ggrep -E --color"
 alias     sed="gsed -r"
 alias     awk="gawk"
-alias    sudo="sudo "
-alias  unsudo="sudo -k"
 alias  topmem="top -o -mem"
 alias  topcpu="top -o -cpu"
 alias  topcow="top -o -cow"
