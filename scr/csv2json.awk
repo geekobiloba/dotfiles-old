@@ -17,14 +17,6 @@
 #   CSV_DELIMITER=';' ./csv2json.awk file.csv
 #
 
-# Normalize double quotes
-function ndq(str){
-  gsub("^|$", "\"", str) # enclose str with double quotes
-  gsub("\"+", "\"", str) # squeeze multiple double quotes
-
-  return str
-}
-
 BEGIN {
   # Get FS from environment; default to comma
   FS = ENVIRON["CSV_DELIMITER"] ? ENVIRON["CSV_DELIMITER"] : ","
@@ -32,6 +24,25 @@ BEGIN {
   FS = "[[:space:]]*" FS "[[:space:]]*" # Normalized FS
   _  = "  "                             # Indentation spaces
 }
+
+# Normalize double quotes
+function ndq(str){
+
+  # non-empty field
+  if (str !~ /^["']?[[:space:]]*["']?$/) {
+    gsub("\"", ""  , str) # remove all double quotes
+    gsub("^" , "\"", str) # prepend str with double quotes
+    gsub("$" , "\"", str) # append str with double quotes
+  }
+
+  # empty field
+  else return "null"
+
+  return str
+}
+
+# Skip every empty line
+$0 ~ /^[[:space:]]*$/ { next }
 
 # Collect keys from CSV header, that is line 1
 NR == 1 {
