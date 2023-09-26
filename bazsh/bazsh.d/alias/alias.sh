@@ -77,7 +77,8 @@ alias rgilh="rghil"
 alias rglhi="rghil"
 alias rglih="rghil"
 
-alias    LS="sl"
+# Etc
+alias       LS="sl"
 alias cpufetch="cpufetch | lolcat -f"
 alias linguist="github-linguist"
 

@@ -1,35 +1,31 @@
 # macOS - Pretty print default gateway
 
 defgw()(
-  local OPTS="$@"
+  local OPT="$@"
 
-  print_usage(){
+  usage(){
     cat <<"EOF"
 defgw - Pretty print default gateway
 
 USAGE
 
-  defgw [OPTSION]
+  defgw [OPTION]
 
-  Print both IPv4 and IPv6 when no option is given.
+Print both IPv4 and IPv6 when no option is given.
 
-  OPTION
+OPTION
 
-    -h
-    --help
-      Show this help
+  -4  IPv4 only
 
-    -4
-      IPv4 only
+  -6  IPv6 only
 
-    -6
-      IPv6 only
+  -h  Show this help
 EOF
-  } # print_usage
+  } # usage
 
   get_defgw(){
     netstat -nr $(
-      echo "$@" |\
+      echo "$OPT" |\
       sed \
         -e 's,-4,-f inet ,' \
         -e 's,-6,-f inet6,'
@@ -38,9 +34,10 @@ EOF
         /^(Destination|default|0\/1)/ {
 
           # Print only the second header
-          if ($1 == "Destination" && header > 0) next
-          else                                   print
-
+          if ($1 == "Destination" && header > 0)
+            next
+          else
+            print
           header++
         }
       ' \
@@ -48,7 +45,7 @@ EOF
   } # get_defgw
 
   colorize_defgw(){
-    get_defgw "$@" |\
+    get_defgw |\
     sed -r '1s,^.+$,\\e[1;36m&\\e[m,'
   } # colorize_defgw
 
@@ -56,18 +53,18 @@ EOF
     printf '%b\n' "$(colorize_defgw)"
   } # print_defgw
 
-  case "$OPTS" in
-    -h|--help)
-      print_usage
+  case "$OPT" in
+    -4|-6|"")
+      print_defgw
       ;;
 
-    -4|-6|"")
-      print_defgw "$OPTS"
+    -h)
+      print_usage
       ;;
 
     *)
       print_usage
-      exit 1
+      return 1
       ;;
   esac
 ) #defgw

@@ -1,20 +1,22 @@
 # macOS - Print default network interfaces
 
 defif()(
-  _defif(){
+  local OPT="$1"
+
+  print_defif(){
     local IPTYPE="$(
-      echo  "$@" \
+      echo  "$OPT" \
       | sed \
           -e 's,-4,inet,' \
           -e 's,-6,inet6,'
     )"
 
-    for IF in $( defgw "$@" | awk 'NR != 1 {print $4}' ) ; do
-      ifconfig $IF $IPTYPE
+    for IFACE in $(defgw "$OPT" | awk 'NR>1 {print $4}') ; do
+      ifconfig "$IFACE" "$IPTYPE"
     done
   } # _defif
 
-  usage(){
+  print_usage(){
     cat <<EOF
 defif - Print default network interfaces info
 
@@ -36,21 +38,21 @@ USAGE
     -6
       IPv6 only
 EOF
-  } # usage
+  } # print_usage
 
-  case "$1" in
+  case "$OPT" in
     -4|-6|"")
-      _defif "$@"
-    ;;
+      print_defif
+      ;;
 
     -h|--help)
-      usage
-    ;;
+      print_usage
+      ;;
 
     *)
-      echo "Unrecognized option: $@"
+      print_usage
       return 1
-    ;;
+      ;;
   esac
 ) # defif
 
