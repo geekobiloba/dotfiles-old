@@ -1,11 +1,15 @@
 # Convert number between bases
 
 b2b(){
+  local IBASE="$1"
+  local OBASE="$2"
+  local INPUT="$3"
+
   {
-    echo "obase=$2"
-    echo "ibase=$1"
-    echo "$3" \
-    | tr 'a-z' 'A-Z' # bc only accepts uppercase hexadecimal digits
+    echo "obase=$OBASE" # define obase before ibase to prevent quirks
+    echo "ibase=$IBASE"
+    echo "$INPUT" \
+    | tr 'a-z' 'A-Z' # only uppercase hexadecimal digits are accepted
   } \
   | bc
 }
