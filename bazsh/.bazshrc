@@ -1,54 +1,63 @@
 # vim: filetype=bash
 
-export  OS_FAMILY=$(uname -s)
-export SHELL_NAME=$(echo $SHELL | awk -F/ '{print $NF}')
+export    _OS_=$(uname -s)
+export _SHELL_=$(echo $SHELL | awk -F/ '{print $NF}')
 
-case $OS_FAMILY in
+ifshell(){
+  if [ -n "$1" ] && [ $1 = $_SHELL_ ] ; then
+    shift
+    "$@"
+  fi
+} # ifshell
+
+alias ifbash="ifshell bash"
+alias  ifzsh="ifshell zsh"
+
+case $_OS_ in
   Darwin)
-    export OS_FAMILY=$(sw_vers --productName) # macOS
-    export  ETC_PATH=/etc
+    export _ETC_=/etc
 
-    test -d /opt/homebrew/opt/ruby/bin && PATH=$_:$PATH ; export PATH
+    test -d ${HOMEBREW_PREFIX}/opt/ruby/bin && \
+    PATH=${_}:${PATH}
+    export PATH
 
-       test -d ~/Library/Python \
-    && test -d $_/$(ls $_ | sort -nr | head -n1)/bin \
-    && PATH=$_:$PATH ; export PATH
+    test -d ~/Library/Python && \
+    test -d ${_}/$(ls $_ | sort -nr | head -n1)/bin && \
+    PATH=${_}:${PATH}
+    export PATH
 
     # Podman and Docker interop
-    test -f ~/.local/share/containers/podman/machine/qemu/podman.sock \
-    && export DOCKER_HOST="unix://$_"
-
-    # Ctrl+U behavior as in bash
-    bindkey \^U backward-kill-line
-  ;;
+    test -f ~/.local/share/containers/podman/machine/qemu/podman.sock && \
+    export DOCKER_HOST="unix://${_}"
+    ;;
 
   FreeBSD)
-    export ETC_PATH=/usr/local/etc
-  ;;
+    export _ETC_=/usr/local/etc
+    ;;
 
   Linux)
-    export ETC_PATH=/etc
-  ;;
+    export _ETC_=/etc
+    ;;
 
   SunOS)
-    export ETC_PATH=/etc
-  ;;
+    export _ETC_=/etc
+    ;;
 esac
 
-. $ETC_PATH/bazshrc
+. ${_ETC_}/bazshrc
 
-test -d ~/.cargo/bin && PATH=$_:$PATH ; export PATH
-test -d ~/go/bin     && PATH=$_:$PATH ; export PATH
-test -d ~/bin        && PATH=$_:$PATH ; export PATH
+test -d ~/.cargo/bin && PATH=${_}:${PATH} ; export PATH
+test -d ~/go/bin     && PATH=${_}:${PATH} ; export PATH
+test -d ~/bin        && PATH=${_}:${PATH} ; export PATH
 
-test -f ~/.bazsh.d/alias/alias.sh              && . $_
-test -f ~/.bazsh.d/alias/alias_${OS_FAMILY}.sh && . $_
+test -f ~/.bazsh.d/alias/alias.sh         && . $_
+test -f ~/.bazsh.d/alias/alias_${_OS_}.sh && . $_
 
-test -d ~/.bazsh.d/func             && ls $_/*.sh | while read f ; do . $f ; done
-test -d ~/.bazsh.d/func/$OS_FAMILY  && ls $_/*.sh | while read f ; do . $f ; done
-test -d ~/.bazsh.d/func/$SHELL_NAME && ls $_/*.sh | while read f ; do . $f ; done
+test -d ~/.bazsh.d/func            && ls ${_}/*.sh | while read f ; do . $f ; done
+test -d ~/.bazsh.d/func/${_OS_}    && ls ${_}/*.sh | while read f ; do . $f ; done
+test -d ~/.bazsh.d/func/${_SHELL_} && ls ${_}/*.sh | while read f ; do . $f ; done
 
-test -f ~/.bazsh.d/custom.sh    && . $_
-test -f ~/.${SHELL_NAME}rc_priv && . $_
-test -f ~/.${SHELL_NAME}rc_work && . $_
+test -f ~/.bazsh.d/custom.sh && . $_
+test -f ~/.${_SHELL_}rc_work && . $_
+test -f ~/.${_SHELL_}rc_priv && . $_
 

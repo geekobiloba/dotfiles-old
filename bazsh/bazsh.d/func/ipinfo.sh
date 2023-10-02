@@ -1,12 +1,28 @@
 # Shorthand for ipinfo.io
 
-ipinfo(){
-  local IP="$1"
+ipinfo(){(
+  local ARG="$1"
 
-  if [ -n "$IP" ]; then
-    curl -s ipinfo.io/$IP | jq
-  else
-    curl -s ipinfo.io     | jq
-  fi
-}
+  _help(){
+    cat <<EOF
+ipinfo - Get IP info from ipinfo.io
+
+USAGE
+
+  ipinfo  [{{ipaddr}}]
+  ipinfo  -h
+
+Get the current host public IP address info when no argument is given.
+
+OPTIONS
+
+  -h  Show this help
+EOF
+  }
+
+  case "$ARG" in
+    -h) _print_help ;;
+    * ) curl -s ipinfo.io/$ARG | jq ;;
+  esac
+)} # ipinfo
 

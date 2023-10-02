@@ -22,7 +22,7 @@ naughtyfetch(){
           '█' \
           '░' \
         --bar_length 32 \
-      | lolcat -f 
+      | lolcat -f
     )
 }
 

@@ -1,19 +1,30 @@
 # vim: filetype=bash
 
-case $OS_FAMILY in
-  macOS)
+case $_OS_ in
+  Darwin)
 
     # brew completions, must be loaded before oh-my-zsh
-    FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:$FPATH"
+    FPATH="${HOMEBREW_PREFIX}/share/zsh/site-functions:${FPATH}"
 
     if [ $EUID -eq 0 ] ; then
 
       # Allow root to use Homebrew-installed apps.
       # Export PATH before any aliases.
-      export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+      export PATH="${HOMEBREW_PREFIX}/bin:${PATH}"
 
       # Bold red prompt
       PS1='%B%F{red}[%n@%m:%~]%#%f%b '
+
+      bindkey "^[[1;5D" backward-word      # Ctrl-Left
+      bindkey "^[[1;5C" forward-word       # Ctrl-Right
+      bindkey "^Y"      yank               # Ctrl-Y
+      bindkey '^R'      history-incremental-search-backward
+      bindkey "^K"      kill-line          # Ctrl-K
+      bindkey "^U"      backward-kill-line # Ctrl-U
+      bindkey "^A"      beginning-of-line  # Ctrl-A
+      bindkey "^E"      end-of-line        # Ctrl-E
+      bindkey "^[[H"    beginning-of-line  # Home
+      bindkey "^[[F"    end-of-line        # End
     fi
   ;;
 
@@ -53,17 +64,16 @@ fi
 export      LESS="-Ri"
 export BAT_THEME="Dracula"
 
-test -f $ETC_PATH/bazsh.d/alias/alias.sh              && . $_
-test -f $ETC_PATH/bazsh.d/alias/alias_${OS_FAMILY}.sh && . $_
+test -d  ${_ETC_}/bazsh.d/func && \
+for f in ${_ETC_}/bazsh.d/func/*.sh ; do . $f ; done
 
-   test -d  $ETC_PATH/bazsh.d/func \
-&& for f in $ETC_PATH/bazsh.d/func/*.sh ; do . $f ; done
+test -d  ${_ETC_}/bazsh.d/func/${_OS_} && \
+for f in ${_ETC_}/bazsh.d/func/${_OS_}/*.sh ; do . $f ; done
 
-   test -d  $ETC_PATH/bazsh.d/func/${OS_FAMILY} \
-&& for f in $ETC_PATH/bazsh.d/func/${OS_FAMILY}/*.sh ; do . $f ; done
+test -d  ${_ETC_}/bazsh.d/func/${_SHELL_} && \
+for f in ${_ETC_}/bazsh.d/func/${_SHELL_}/*.sh ; do . $f ; done
 
-   test -d  $ETC_PATH/bazsh.d/func/${SHELL_NAME} \
-&& for f in $ETC_PATH/bazsh.d/func/${SHELL_NAME}/*.sh ; do . $f ; done
-
-test -f $ETC_PATH/bazsh/custom.sh && . $_
+test -f ${_ETC_}/bazsh.d/alias/alias.sh         && . $_
+test -f ${_ETC_}/bazsh.d/alias/alias_${_OS_}.sh && . $_
+test -f ${_ETC_}/bazsh.d/custom.sh              && . $_
 

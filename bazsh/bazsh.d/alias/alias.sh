@@ -2,14 +2,14 @@
 alias   rm="rm -i"
 alias   mv="mv -i"
 alias   cp="cp -i"
-alias  cls="clear" 
+alias  cls="clear"
 alias grep="grep -E --color"
 alias  sed="sed -r"
 alias   rl="readlink -f"
 alias   bc="bc -l"
 
-# Reset shell
-alias resetsh="reset && exec $SHELL"
+# Reload shell
+alias reload="exec $SHELL"
 
 # ls
 alias    la="ls -a"

@@ -9,7 +9,3 @@ alias  python="/opt/homebrew/bin/python3"
 alias     dns="scutil --dns"
 #alias   iperf="iperf3-darwin"
 
-   [ $TERM_PROGRAM = Apple_Terminal ] \
-|| [ $TERM_PROGRAM = iTerm.app      ] \
-&& alias cls="osascript -e 'tell application \"System Events\" to tell process \"Terminal\" to keystroke \"k\" using command down'"
-

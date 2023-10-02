@@ -52,7 +52,7 @@ ai2sc()(
       error_99
     fi
 
-    
+
     ferror "ERROR: ansible-inventory exit code: $?"
 
     if [ -n "$JSON" ] ; then

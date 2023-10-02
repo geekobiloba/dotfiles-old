@@ -2,7 +2,7 @@
 #
 # Must be reexecuted after every OS update
 
-sudo_touch(){
+sudo-touch(){
   local PAM_SUDO=/etc/pam.d/sudo
 
   sudo chmod u+w $PAM_SUDO

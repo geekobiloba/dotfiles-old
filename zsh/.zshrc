@@ -113,9 +113,8 @@ plugins=(
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 test -f ~/.p10k.zsh && . $_
-
-test -f ~/.bazshrc && . $_
-test -f ~/.fzf.zsh && . $_
+test -f ~/.bazshrc  && . $_
+test -f ~/.fzf.zsh  && . $_
 
 # direnv
 which direnv &>/dev/null && eval "$(direnv hook zsh)"
@@ -124,4 +123,6 @@ which direnv &>/dev/null && eval "$(direnv hook zsh)"
 echo
 neofetch
 echo
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && . $_
 
