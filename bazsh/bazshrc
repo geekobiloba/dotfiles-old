@@ -61,7 +61,7 @@ else
   export EDITOR="vi"
 fi
 
-export      LESS="-Ri"
+export      LESS="-R -i"
 export BAT_THEME="Dracula"
 
 test -d  ${_ETC_}/bazsh.d/func && \

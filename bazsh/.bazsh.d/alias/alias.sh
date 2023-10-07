@@ -10,3 +10,5 @@ alias  kns="kubectl ns"
 alias ffp="firefox -p 2>/dev/null"
 alias w3m="w3m -H -F -T text/html -sixel"
 
+alias jq="jq --color-output"
+

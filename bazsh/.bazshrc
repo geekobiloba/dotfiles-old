@@ -1,5 +1,10 @@
 # vim: filetype=bash
 
+export BAZSHD=~/.bazsh.d
+export BAZSHLIB=~/.bazsh.d/lib
+
+export PATH=~/.bazsh.d/bin:${PATH}
+
 export    _OS_=$(uname -s)
 export _SHELL_=$(echo $SHELL | awk -F/ '{print $NF}')
 
@@ -16,6 +21,9 @@ alias  ifzsh="ifshell zsh"
 case $_OS_ in
   Darwin)
     export _ETC_=/etc
+
+    # Key bindings
+    bindkey "^U" backward-kill-line # Ctrl-U
 
     test -d ${HOMEBREW_PREFIX}/opt/ruby/bin && \
     PATH=${_}:${PATH}
