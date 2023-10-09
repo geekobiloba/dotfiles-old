@@ -26,12 +26,6 @@ alias xargsi="xargs -I '{}'"
 alias   sudo="sudo "
 alias unsudo="sudo -k"
 
-# dig
-alias digr="dig -x"
-alias digs="dig +short"
-alias rdig="digr"
-alias sdig="digs"
-
 # iperf
 alias iperf="iperf3"
 

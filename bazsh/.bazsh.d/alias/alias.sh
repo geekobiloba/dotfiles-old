@@ -12,3 +12,9 @@ alias w3m="w3m -H -F -T text/html -sixel"
 
 alias jq="jq --color-output"
 
+# dig
+alias digr="dig -x"
+alias digs="dig +short"
+alias dig6="dig aaaa"
+alias digs6="dig +short aaaa"
+
