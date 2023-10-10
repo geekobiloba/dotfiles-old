@@ -18,3 +18,7 @@ alias digs="dig +short"
 alias dig6="dig aaaa"
 alias digs6="dig +short aaaa"
 
+alias watch="watch "
+
+alias grepi="grep -i"
+

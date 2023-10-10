@@ -2,10 +2,6 @@
 
 case $_OS_ in
   Darwin)
-
-    # brew completions, must be loaded before oh-my-zsh
-    FPATH="${HOMEBREW_PREFIX}/share/zsh/site-functions:${FPATH}"
-
     if [ $EUID -eq 0 ] ; then
 
       # Allow root to use Homebrew-installed apps.
