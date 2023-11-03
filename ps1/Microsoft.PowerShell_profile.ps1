@@ -111,6 +111,8 @@ Invoke-Expression (&scoop-search --hook)
 # See https://ch0.co/tab-completion for details.
 $Env:ChocolateyInstall = "C:\ProgramData\chocolatey"
 $ChocolateyProfile     = "$Env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+$Env:Path             += ";$Env:ChocolateyInstall"
+$Env:Path             += ";$Env:ChocolateyInstall\bin"
 
 Import-Module $ChocolateyProfile
 
@@ -119,4 +121,15 @@ Import-Module $ChocolateyProfile
 
 $Env:Path += ";C:\Users\Administrator\AppData\Local\Programs\oh-my-posh\bin"
 oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\mojada.omp.json" | Invoke-Expression
+
+# Key bindings
+# ------------
+
+Set-PSReadLineKeyHandler -Chord 'Ctrl+w' -Function BackwardKillWord
+Set-PSReadLineKeyHandler -Chord 'Ctrl+u' -Function BackwardKillLine
+#Set-PSReadLineKeyHandler -Chord 'Ctrl+k' -Function ForwardKillLine
+Set-PSReadLineKeyHandler -Chord 'Ctrl+k' -Function ForwardDeleteLine
+Set-PSReadLineKeyHandler -Chord 'Ctrl+a' -Function BeginningOfLine
+Set-PSReadLineKeyHandler -Chord 'Ctrl+e' -Function EndOfLine
+Set-PSReadLineKeyHandler -Chord 'Ctrl+y' -Function Yank
 
