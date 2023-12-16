@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# BEGIN common early config
-=======
 # BEGIN safe early config
 #
 # All configs below are SAFE because they test each parameter
@@ -10,7 +7,6 @@
 # But when you do, these configs will load them properly.
 #
 
->>>>>>> 65192a0 (update zshrc)
 # Powerlevel10k instant prompt, should stay close to the top of ~/.zshrc
 test -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" && . $_
 
@@ -58,11 +54,7 @@ bindkey '^R'      history-incremental-search-backward
 
 # bold red prompt for root
 test $EUID -eq 0 && PS1='%B%F{red}[%n@%m:%~]%#%f%b '
-<<<<<<< HEAD
-# END common early config
-=======
 # END safe early config
->>>>>>> 65192a0 (update zshrc)
 
 # zsh config
 HYPHEN_INSENSITIVE="true"
@@ -154,11 +146,7 @@ if [ -d ~/.pipx ] ; then
 fi
 # END pipx safe environment for Ansible
 
-<<<<<<< HEAD
-# BEGIN common late config
-=======
 # BEGIN safe late config
->>>>>>> 65192a0 (update zshrc)
 # fzf should be loaded after oh-my-zsh plugins
 test -r ~/.fzf.zsh                                      && . $_
 test -r ~/.local/share/kubectl-aliases/.kubectl_aliases && . $_
@@ -166,11 +154,7 @@ test -r ~/.iterm2_shell_integration.zsh                 && . $_
 test -r ~/.bazshly/bazshly.sh                           && . $_
 test -r ~/.zshrc_work                                   && . $_
 test -r ~/.zshrc_priv                                   && . $_
-<<<<<<< HEAD
-# END common late config
-=======
 # END safe late config
->>>>>>> 65192a0 (update zshrc)
 
 # Show neofetch on every new zsh session
 if which neofetch &>/dev/null ; then
