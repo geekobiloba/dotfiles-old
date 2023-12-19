@@ -1,16 +1,12 @@
-<<<<<<< HEAD
-# BEGIN common early config
-=======
 # BEGIN safe early config
 #
 # All configs below are SAFE because they test each parameter
 # before sourcing or exporting it,
 # and do not blindly assume that you use any specific add-ons,
 # like oh-my-zsh or Powerevel10K.
-# But when you do, these configs will load them properly.
+# But when you do, they will be loaded properly.
 #
 
->>>>>>> 65192a0 (update zshrc)
 # Powerlevel10k instant prompt, should stay close to the top of ~/.zshrc
 test -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" && . $_
 
@@ -19,6 +15,7 @@ if [ -n "$HOMEBREW_PREFIX" ] ; then
   # brew completions, should be loaded before oh-my-zsh
   FPATH="${HOMEBREW_PREFIX}/share/zsh/site-functions:$FPATH"
 
+  test -d ${HOMEBREW_PREFIX}/opt/speedtest/bin          && PATH=$_:$PATH && export PATH
   test -d ${HOMEBREW_PREFIX}/opt/mysql-client/bin       && PATH=$_:$PATH && export PATH
   test -d ${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin    && PATH=$_:$PATH && export PATH
   test -d ${HOMEBREW_PREFIX}/opt/gawk/libexec/gnubin    && PATH=$_:$PATH && export PATH
@@ -58,11 +55,7 @@ bindkey '^R'      history-incremental-search-backward
 
 # bold red prompt for root
 test $EUID -eq 0 && PS1='%B%F{red}[%n@%m:%~]%#%f%b '
-<<<<<<< HEAD
-# END common early config
-=======
 # END safe early config
->>>>>>> 65192a0 (update zshrc)
 
 # zsh config
 HYPHEN_INSENSITIVE="true"
@@ -99,10 +92,24 @@ if [ -d ~/.oh-my-zsh ] ; then
    #zsh-syntax-highlighting
     fast-syntax-highlighting
     git
+    gh
     golang
+   #python
+    pip
     pyenv
+    ruby
+    gem
     kubectl
     kubetail
+    1password
+    knife
+    knife_ssh
+    httpie
+    nmap
+    terraform
+    rsync
+   #macos
+   #iterm2
   )
 
   . ${ZSH}/oh-my-zsh.sh
@@ -154,11 +161,7 @@ if [ -d ~/.pipx ] ; then
 fi
 # END pipx safe environment for Ansible
 
-<<<<<<< HEAD
-# BEGIN common late config
-=======
 # BEGIN safe late config
->>>>>>> 65192a0 (update zshrc)
 # fzf should be loaded after oh-my-zsh plugins
 test -r ~/.fzf.zsh                                      && . $_
 test -r ~/.local/share/kubectl-aliases/.kubectl_aliases && . $_
@@ -166,11 +169,13 @@ test -r ~/.iterm2_shell_integration.zsh                 && . $_
 test -r ~/.bazshly/bazshly.sh                           && . $_
 test -r ~/.zshrc_work                                   && . $_
 test -r ~/.zshrc_priv                                   && . $_
-<<<<<<< HEAD
-# END common late config
-=======
 # END safe late config
->>>>>>> 65192a0 (update zshrc)
+
+# BEGIN aliases
+alias knife='RBENV_VERSION=3.1.4 knife'
+alias  kctx='kubectl ctx'
+alias   kns='kubectl ns'
+# END aliases
 
 # Show neofetch on every new zsh session
 if which neofetch &>/dev/null ; then
