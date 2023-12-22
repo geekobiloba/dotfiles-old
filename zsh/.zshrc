@@ -1,7 +1,7 @@
 # BEGIN safe early config
 #
-# All configs below are SAFE because they test each parameter
-# before sourcing or exporting it,
+# All configs below are SAFE because each parameter is tested
+# before being sourced or exported,
 # and do not blindly assume that you use any specific add-ons,
 # like oh-my-zsh or Powerevel10K.
 # But when you do, they will be loaded properly.
