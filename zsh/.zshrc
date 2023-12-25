@@ -163,12 +163,12 @@ fi
 
 # BEGIN safe late config
 # fzf should be loaded after oh-my-zsh plugins
-test -r ~/.fzf.zsh                                      && . $_
-test -r ~/.local/share/kubectl-aliases/.kubectl_aliases && . $_
-test -r ~/.iterm2_shell_integration.zsh                 && . $_
-test -r ~/.bazshly/bazshly.sh                           && . $_
-test -r ~/.zshrc_work                                   && . $_
-test -r ~/.zshrc_priv                                   && . $_
+test -r ~/.fzf.zsh                          && . $_
+test -r ~/.kubectl-aliases/.kubectl_aliases && . $_
+test -r ~/.iterm2_shell_integration.zsh     && . $_
+test -r ~/.bazshly/bazshly.sh               && . $_
+test -r ~/.zshrc_work                       && . $_
+test -r ~/.zshrc_priv                       && . $_
 # END safe late config
 
 # BEGIN aliases
