@@ -396,6 +396,8 @@
     local conflicted='%1F' # red foreground
 
     local res
+    local profile="$(gh profile show 2>/dev/null)"
+    [[ -n "$profile" ]] && res+="$profile "
 
     if [[ -n $VCS_STATUS_LOCAL_BRANCH ]]; then
       local branch=${(V)VCS_STATUS_LOCAL_BRANCH}
