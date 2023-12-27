@@ -158,6 +158,10 @@ if [ -d ~/.pipx ] ; then
   export   PIPX_TRASH_DIR="${PIPX_HOME}/trash"
   export PIPX_SHARED_LIBS="${PIPX_HOME}/shared"
   export PIPX_LOCAL_VENVS="${PIPX_HOME}/venvs"
+
+  # Completion
+  [ ! -d ~/.oh-my-zsh ] && autoload -U bashcompinit && bashcompinit
+  eval "$(register-python-argcomplete pipx)"
 fi
 # END pipx safe environment for Ansible
 
