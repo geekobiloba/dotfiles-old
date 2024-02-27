@@ -1,3 +1,6 @@
+.DS_Store
+[Tt]humbs.db
+
 custom.sh
 zshrc_priv
 zshrc_work
@@ -7,5 +10,4 @@ bashrc_work
 .zshrc_work
 .bashrc_priv
 .bashrc_work
-.DS_Store
 

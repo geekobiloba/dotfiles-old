@@ -41,17 +41,17 @@ function cd ($location = "~"){
 
 Remove-Item alias:\ls
 
-function l    { exa        @args }
-function ls   { exa        @args }
-function l1   { exa -1     @args }
-function la   { exa -a     @args }
-function lt   { exa -T     @args }
-function lta  { exa -Ta    @args }
-function lat  { exa -Ta    @args }
-function ll   { exa -lgh   @args }
-function lla  { exa -lgha  @args }
-function llah { exa -lgha  @args }
-function llat { exa -lghaT @args }
+function l    { eza        @args }
+function ls   { eza        @args }
+function l1   { eza -1     @args }
+function la   { eza -a     @args }
+function lt   { eza -T     @args }
+function lta  { eza -Ta    @args }
+function lat  { eza -Ta    @args }
+function ll   { eza -lgh   @args }
+function lla  { eza -lgha  @args }
+function llah { eza -lgha  @args }
+function llat { eza -lghaT @args }
 
 # Functions
 # ---------
