@@ -15,11 +15,13 @@ if [ -n "$HOMEBREW_PREFIX" ] ; then
   # brew completions, should be loaded before oh-my-zsh
   FPATH="${HOMEBREW_PREFIX}/share/zsh/site-functions:$FPATH"
 
-  test -d ${HOMEBREW_PREFIX}/opt/speedtest/bin          && PATH=$_:$PATH && export PATH
-  test -d ${HOMEBREW_PREFIX}/opt/mysql-client/bin       && PATH=$_:$PATH && export PATH
-  test -d ${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin    && PATH=$_:$PATH && export PATH
-  test -d ${HOMEBREW_PREFIX}/opt/gawk/libexec/gnubin    && PATH=$_:$PATH && export PATH
-  test -d ${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin && PATH=$_:$PATH && export PATH
+  test -d ${HOMEBREW_PREFIX}/opt/curl/bin                 && PATH=$_:$PATH && export PATH
+  test -d ${HOMEBREW_PREFIX}/opt/speedtest/bin            && PATH=$_:$PATH && export PATH
+  test -d ${HOMEBREW_PREFIX}/opt/mysql-client/bin         && PATH=$_:$PATH && export PATH
+  test -d ${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin      && PATH=$_:$PATH && export PATH
+  test -d ${HOMEBREW_PREFIX}/opt/gawk/libexec/gnubin      && PATH=$_:$PATH && export PATH
+  test -d ${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin   && PATH=$_:$PATH && export PATH
+  test -d ${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin && PATH=$_:$PATH && export PATH
 
   test -r ${HOMEBREW_PREFIX}/share/google-cloud-sdk/path.zsh.inc       && . $_
   test -r ${HOMEBREW_PREFIX}/share/google-cloud-sdk/completion.zsh.inc && . $_
