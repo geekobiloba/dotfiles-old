@@ -76,17 +76,18 @@ if [ -d ~/.oh-my-zsh ] ; then
 
     . ~/.p10k.zsh
 
-    typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+    #typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+    typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
     typeset -g POWERLEVEL9K_DIR_BACKGROUND=33 # blue prompt
 
-    case $(uname -s) in
-      Darwin)
+    #case $(uname -s) in
+    #  Darwin)
 
         # iTerm2 prompt tail gradation
         typeset -g POWERLEVEL9K_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL='%K{#585854} %K{#84847C} %K{#B1B1A5} %k'
         typeset -g   POWERLEVEL9K_RIGHT_PROMPT_LAST_SEGMENT_END_SYMBOL='%K{#B1B1A5} %K{#84847C} %K{#585854} %k'
-        ;;
-    esac
+    #    ;;
+    #esac
   fi
 
   plugins=(
@@ -182,7 +183,9 @@ fi
 
 # BEGIN safe late config
 # fzf should be loaded after oh-my-zsh plugins
-test -r ~/.fzf.zsh                          && . $_
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
+#test -r ~/.fzf.zsh                          && . $_
 test -r ~/.kubectl-aliases/.kubectl_aliases && . $_
 test -r ~/.iterm2_shell_integration.zsh     && . $_
 test -r ~/.bazshly/bazshly.sh               && . $_
@@ -199,7 +202,14 @@ alias   kns='kubectl ns'
 # Show neofetch on every new zsh session
 if which neofetch &>/dev/null ; then
   echo
-  neofetch
+
+  # On openSUSE, show Geecko icon and disable slow packages info
+  if [ -f /etc/os-release ] && grep -iq opensuse /etc/os-release ; then
+    neofetch --ascii_distro opensuse --disable packages
+  else
+    neofetch
+  fi
+
   echo
 fi
 
