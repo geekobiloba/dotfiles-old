@@ -1,8 +1,3 @@
-# SSH host completion, must be at the top of a script due to `using`.
-#
-# See: https://gist.github.com/backerman/2c91d31d7a805460f93fe10bdfa0ffb0
-using namespace System.Management.Automation
-
 # Default encoding
 $PSDefaultParameterValues['*:Encoding'] = 'utf8'
 
@@ -303,14 +298,10 @@ Import-Module scoop-completion
 Invoke-Expression (&scoop-search --hook)
 
 # sudo
-#New-Alias -Name sudo -Value $HOME\scoop\shims\sudo
+New-Alias -Name sudo -Value $HOME\scoop\shims\sudo
 
 # Oh My Posh
-#oh-my-posh init pwsh | Invoke-Expression
-oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\cloud-native-azure.omp.json" | Invoke-Expression
-#oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\mojada.omp.json" | Invoke-Expression
-#oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\chips.omp.json" | Invoke-Expression
-#oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\atomic.omp.json" | Invoke-Expression
+oh-my-posh init pwsh | Invoke-Expression
 
 # PSFzf: replace 'Ctrl+t' and 'Ctrl+r' with your preferred bindings:
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
@@ -352,9 +343,9 @@ function diff { diff.exe --color @Args }
 Get-Alias -Name "curl" -ErrorAction Ignore | % {Remove-Item -Force Alias:\$_}
 
 # Windows Terminal
-function Duplicate-WTTab          { wt nt    -d $PWD }
-function Split-WTPaneVertically   { wt sp -V -d $PWD }
-function Split-WTPaneHorizontally { wt sp -H -d $PWD }
+function New-WindowsTerminalTab            { wt nt    -d $PWD }
+function Split-WindowsTerminalVertically   { wt sp -V -d $PWD }
+function Split-WindowsTerminalHorizontally { wt sp -H -d $PWD }
 
 # govc
 If (Test-Path $HOME\.govc.ps1) {. $HOME\.govc.ps1}
@@ -614,52 +605,5 @@ Register-ArgumentCompleter -CommandName 'podman.exe' -ScriptBlock ${__podman.exe
 Import-Module DockerCompletion
 
 # Ansible
-function ansible  {wsl --shell-type login -- ansible  @Args}
-function ansible9 {wsl --shell-type login -- ansible9 @Args}
-
-# SSH host completion, `using namespace` at the top of this script,
-# modified to recognize `Host abc` from SSH config.
-#
-# See: https://gist.github.com/backerman/2c91d31d7a805460f93fe10bdfa0ffb0
-#
-# TODO: Clean up the code!
-
-Register-ArgumentCompleter -CommandName ssh,scp,sftp -Native -ScriptBlock {
-  param($wordToComplete, $commandAst, $cursorPosition)
-
-  #$knownHosts = Get-Content ${Env:HOMEPATH}\.ssh\known_hosts `
-  #| ForEach-Object { ([string]$_).Split(' ')[0] } `
-  #| ForEach-Object { $_.Split(',') } `
-  #| Sort-Object -Unique
-
-  $sshHosts = (
-    Get-ChildItem -Recurse $HOME\.ssh\ |
-    Where-Object {! $_.PSIsContainer} |
-    ForEach-Object {Get-Content $_} |
-    Select-String -Pattern '^\s*Host\s+' ) -replace '\s*Host\s*|\*\S*|\S*\*', '' |
-    Select-String -Pattern '^\s*$' -NotMatch |
-    ForEach-Object {$_ -split '\s+'} |
-    Sort-Object -Unique
-
-  # For now just assume it's a hostname.
-  $textToComplete = $wordToComplete
-  $generateCompletionText = {
-    param($x)
-    $x
-  }
-
-  #if ($wordToComplete -match "^(?<user>[-\w/\\]+)@(?<host>[-.\w]+)$") {
-  #  $textToComplete = $Matches["host"]
-  #  $generateCompletionText = {
-  #    param($hostname)
-  #    $Matches["user"] + "@" + $hostname
-  #  }
-  #}
-
-  $sshHosts |
-    Where-Object { $_ -like "${textToComplete}*" } |
-    ForEach-Object {
-      [CompletionResult]::new((&$generateCompletionText($_)), $_, [CompletionResultType]::ParameterValue, $_)
-    }
-}
+function ansible {wsl --shell-type login -- ansible @Args}
 
