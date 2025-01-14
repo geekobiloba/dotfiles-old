@@ -19,8 +19,112 @@ function rm { Remove-Item -Confirm @Args }
 function mv { Move-Item   -Confirm @Args }
 function cp { Copy-Item   -Confirm @Args }
 
+# more is less
+New-Alias -Name more     -Value less
+New-Alias -Name more.com -Value less
+
+# less env
+$env:LESS = '-Ri'
+
+# govc env
+if (Test-Path $HOME\.govc.ps1) {. $HOME\.govc.ps1}
+
+# 7-Zip
+New-Alias -Name 7z -Value $env:ProgramFiles\7-Zip\7z.exe
+
+# sudo
+#New-Alias -Name sudo -Value $HOME\scoop\shims\sudo
+
+# Oh My Posh
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\cloud-native-azure.omp.json" | Invoke-Expression
+
+# PSFzf: replace 'Ctrl+t' and 'Ctrl+r' with your preferred bindings:
+Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+
+# vim is nvim
+New-Alias -Name vi  -Value nvim
+New-Alias -Name vim -Value nvim
+
+function view    { nvim -R @Args }
+function vimdiff { nvim -d @Args }
+
+# cpp is C++ compiler
+Remove-Item -Force Alias:\cpp
+
+# hide & unhide
+function   hide { (Get-Item -Force @Args).Attributes += "Hidden" }
+function unhide { (Get-Item -Force @Args).Attributes -= "Hidden" }
+
+# UNIX tools
+function grep {
+  if ($MyInvocation.ExpectingInput) {
+    $input | grep.exe -E --color @Args
+  } else {
+    grep.exe -E --color @Args
+  }
+}
+
+function sed {
+  if ($MyInvocation.ExpectingInput) {
+    $input | sed.exe -E @Args
+  } else {
+    sed.exe -E @Args
+  }
+}
+
+# find
+New-Alias -Name find -Value $env:ProgramFiles\Git\usr\bin\find.exe
+
+# Real diff
+Remove-Item -Force Alias:\diff
+
+function diff { diff.exe --color @Args }
+
+# Real curl
+Get-Alias -Name "curl" -ErrorAction Ignore | % { Remove-Item -Force Alias:\$_ }
+
+# Windows Terminal
+function Duplicate-WTTab          { wt nt    -d $PWD }
+function Split-WTPaneVertically   { wt sp -V -d $PWD }
+function Split-WTPaneHorizontally { wt sp -H -d $PWD }
+
+# Ansible
+function ansible  { wsl --shell-type login -- ansible  @Args }
+function ansible9 { wsl --shell-type login -- ansible9 @Args }
+
+# eza
+function l   { eza       @Args }
+function la  { eza -a    @Args }
+function lt  { eza -T    @Args }
+function ll  { eza -lh   @Args }
+function lah { eza -lah  @Args }
+function lla { eza -lah  @Args }
+function llt { eza -lhT  @Args }
+function lat { eza -lahT @Args }
+
+# misc
+function mtr        { wsl -- mtr @Args }
+function subnetcalc { wsl -- subnetcalc @Args }
+
+function ipinfo { wsl --shell-type login -- ipinfo $Args }
+function asinfo { wsl --shell-type login -- asinfo $Args }
+
+function asciiquarium { wsl -- . ~/.perlrc `&`& ~/bin/asciiquarium }
+
+# docker is podman
+New-Alias -Name docker -Value podman
+
 # PSColor
 Import-Module PSColor
+
+# Scoop faster search
+Invoke-Expression (&scoop-search --hook)
+
+# Scoop completion
+Import-Module scoop-completion
+
+# git completion
+Import-Module posh-git
 
 # winget completion
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
@@ -32,9 +136,6 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
       [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
     }
 }
-
-# git completion
-Import-Module posh-git
 
 # powershell completion for gh                                   -*- shell-script -*-
 
@@ -281,86 +382,6 @@ filter __gh_escapeStringWithSpecialChars {
 }
 
 Register-ArgumentCompleter -CommandName 'gh' -ScriptBlock ${__ghCompleterBlock}
-
-# more is less
-New-Alias -Name more     -Value less
-New-Alias -Name more.com -Value less
-
-$env:LESS = '-Ri'
-
-# Real diff
-Remove-Item -Force Alias:\diff
-
-New-Alias -Name find -Value $env:ProgramFiles\Git\usr\bin\find.exe
-
-# 7-Zip
-New-Alias -Name 7z -Value $env:ProgramFiles\7-Zip\7z.exe
-
-# Scoop completion
-Import-Module scoop-completion
-
-# Scoop faster search
-Invoke-Expression (&scoop-search --hook)
-
-# sudo
-#New-Alias -Name sudo -Value $HOME\scoop\shims\sudo
-
-# Oh My Posh
-#oh-my-posh init pwsh | Invoke-Expression
-oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\cloud-native-azure.omp.json" | Invoke-Expression
-#oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\mojada.omp.json" | Invoke-Expression
-#oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\chips.omp.json" | Invoke-Expression
-#oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\atomic.omp.json" | Invoke-Expression
-
-# PSFzf: replace 'Ctrl+t' and 'Ctrl+r' with your preferred bindings:
-Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
-
-# vim is nvim
-New-Alias -Name vi  -Value nvim
-New-Alias -Name vim -Value nvim
-
-function view    { nvim -R @Args }
-function vimdiff { nvim -d @Args }
-
-# cpp
-Remove-Item -Force Alias:\cpp
-
-# hide & unhide
-function   hide { (Get-Item -Force @Args).Attributes += "Hidden" }
-function unhide { (Get-Item -Force @Args).Attributes -= "Hidden" }
-
-# UNIX tools
-function grep {
-  if ($MyInvocation.ExpectingInput) {
-    $input | grep.exe -E --color @Args
-  } else {
-    grep.exe -E --color @Args
-  }
-}
-
-function sed {
-  if ($MyInvocation.ExpectingInput) {
-    $input | sed.exe -E @Args
-  } else {
-    sed.exe -E @Args
-  }
-}
-
-function diff { diff.exe --color @Args }
-
-# Real curl
-Get-Alias -Name "curl" -ErrorAction Ignore | % {Remove-Item -Force Alias:\$_}
-
-# Windows Terminal
-function Duplicate-WTTab          { wt nt    -d $PWD }
-function Split-WTPaneVertically   { wt sp -V -d $PWD }
-function Split-WTPaneHorizontally { wt sp -H -d $PWD }
-
-# govc
-If (Test-Path $HOME\.govc.ps1) {. $HOME\.govc.ps1}
-
-# docker is podman
-New-Alias -Name docker -Value podman
 
 # powershell completion for podman.exe                           -*- shell-script -*-
 
@@ -612,10 +633,6 @@ Register-ArgumentCompleter -CommandName 'podman.exe' -ScriptBlock ${__podman.exe
 
 # Docker completion
 Import-Module DockerCompletion
-
-# Ansible
-function ansible  {wsl --shell-type login -- ansible  @Args}
-function ansible9 {wsl --shell-type login -- ansible9 @Args}
 
 # SSH host completion, `using namespace` at the top of this script,
 # modified to recognize `Host abc` from SSH config.
