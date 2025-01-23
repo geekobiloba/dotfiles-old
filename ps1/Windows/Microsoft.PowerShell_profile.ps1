@@ -7,8 +7,9 @@ using namespace System.Management.Automation
 $PSDefaultParameterValues['*:Encoding'] = 'utf8'
 
 # Key bindings
-Set-PSReadLineKeyHandler -Chord 'Ctrl+u' -function BackwardKillLine
-Set-PSReadLineKeyHandler -Chord 'Ctrl+k' -function ForwardDeleteLine
+Set-PSReadLineKeyHandler -Chord 'Ctrl+u' -Function BackwardKillLine
+Set-PSReadLineKeyHandler -Chord 'Ctrl+k' -Function KillLine
+Set-PSReadLineKeyHandler -Chord 'Ctrl+y' -Function Yank
 
 # Safe rm, mv, and cp
 Remove-Item -Force Alias:\rm
