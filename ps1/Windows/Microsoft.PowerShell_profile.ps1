@@ -51,6 +51,9 @@ function vimdiff { nvim -d @Args }
 # cpp is C++ compiler
 Remove-Item -Force Alias:\cpp
 
+# Node.js LTS from nvs
+$env:Path += ';' + "$env:LOCALAPPDATA\nvs\$((nvs ls lts) -replace '.*(node\S+).*', '$1')"
+
 # hide & unhide
 function   hide { (Get-Item -Force @Args).Attributes += "Hidden" }
 function unhide { (Get-Item -Force @Args).Attributes -= "Hidden" }
