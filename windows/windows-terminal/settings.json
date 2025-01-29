@@ -140,6 +140,7 @@
         "list": 
         [
             {
+                "cursorShape": "filledBox",
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
                 "name": "PowerShell",
@@ -164,6 +165,7 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
+                "cursorShape": "filledBox",
                 "guid": "{bc2da056-dd06-5879-b969-1dfcefc8d2c7}",
                 "hidden": false,
                 "icon": "C:\\Users\\ellam\\Pictures\\icons\\opensuse.png",
@@ -171,6 +173,7 @@
                 "source": "Windows.Terminal.Wsl"
             },
             {
+                "cursorShape": "filledBox",
                 "guid": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
                 "hidden": false,
                 "icon": "C:\\Users\\ellam\\Pictures\\icons\\Debian.png",
@@ -197,6 +200,7 @@
                 "source": "JuliaComputingInc.Julia_5z4q23t4ga8jg"
             },
             {
+                "cursorShape": "filledBox",
                 "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
                 "hidden": false,
                 "name": "Git Bash",
