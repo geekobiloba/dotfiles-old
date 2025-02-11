@@ -53,7 +53,7 @@ function vimdiff { nvim -d @Args }
 Remove-Item -Force Alias:\cpp
 
 # Node.js LTS from nvs
-$env:Path += ';' + "$env:LOCALAPPDATA\nvs\$((nvs ls lts) -replace '.*(node\S+).*', '$1')"
+$env:Path += ";" + "$env:LOCALAPPDATA\nvs\$((nvs ls lts) -replace '.*(node\S+).*', '$1')"
 
 # hide & unhide
 function   hide { (Get-Item -Force @Args).Attributes += "Hidden" }
@@ -97,14 +97,20 @@ function ansible  { wsl --shell-type login -- ansible  @Args }
 function ansible9 { wsl --shell-type login -- ansible9 @Args }
 
 # eza
-function l   { eza       @Args }
-function la  { eza -a    @Args }
-function lt  { eza -T    @Args }
-function ll  { eza -lh   @Args }
-function lah { eza -lah  @Args }
-function lla { eza -lah  @Args }
-function llt { eza -lhT  @Args }
-function lat { eza -lahT @Args }
+function l    { eza       @Args }
+function la   { eza -a    @Args }
+function lt   { eza -T    @Args }
+function ll   { eza -lh   @Args }
+function llt  { eza -lhT  @Args }
+function lat  { eza -lahT @Args }
+function lah  { eza -lah  @Args }
+function lla  { eza -lah  @Args }
+function llah { eza -lah  @Args }
+
+# VirtualBox
+if (Test-Path $env:ProgramFiles\Oracle\VirtualBox) {
+  $env:Path += ";" + "$env:ProgramFiles\Oracle\VirtualBox"
+}
 
 # misc
 function mtr        { wsl -- mtr @Args }
@@ -684,3 +690,4 @@ Register-ArgumentCompleter -CommandName ssh,scp,sftp -Native -ScriptBlock {
     }
 }
 
+& C:\Users\ellam\AppData\Local\tea\tea.ps1
